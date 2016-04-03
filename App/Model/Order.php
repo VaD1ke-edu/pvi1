@@ -1,0 +1,39 @@
+<?php
+namespace App\Model;
+
+use \App\Model\Core\Entity as EntityAbstract;
+
+/**
+ * Order entity model
+ *
+ * @category   App
+ * @package    App
+ * @subpackage Bot
+ * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
+ */
+class Order extends EntityAbstract
+{
+    /**
+     * Order ID column name
+     */
+    const COLUMN_ORDER_ID = 'id';
+    /**
+     * Customer email column name
+     */
+    const COLUMN_CUSTOMER_EMAIL = 'customer_email';
+    /**
+     * Order total column name
+     */
+    const COLUMN_ORDER_TOTAL = 'total';
+    /**
+     * Customer ID column name
+     */
+    const COLUMN_CUSTOMER_ID = 'customer_id';
+
+    /**
+     * Table name
+     *
+     * @var string
+     */
+    protected $_tableName = 'quote';
+}

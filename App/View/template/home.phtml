@@ -1,0 +1,12 @@
+<?php /** @var \App\Model\View\Renderer $this */ ?>
+
+<?php /** @var App\Model\Core\Entity\Collection $_companies */ ?>
+<?php $_companies = $this->getData('companies') ?>
+<?php if ($_companies && $_companies->getSize()): ?>
+    <?php while ($_company = $_companies->fetchItem()): ?>
+        <div><?php echo $_company->getName() ?></div>
+    <?php endwhile; ?>
+<?php else: ?>
+    <div>Пока нет компаний.</div>
+    <button>Добавить</button>
+<?php endif; ?>

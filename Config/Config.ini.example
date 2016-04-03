@@ -1,0 +1,2 @@
+database_driver = "Pdo_Sqlite"
+database_name = "Database/notifier.db"
