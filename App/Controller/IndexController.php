@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Model\Core\Entity\Collection;
 
 /**
  * Index controller
@@ -35,7 +36,7 @@ class IndexController extends AbstractController
 
         return $this->_di->get('View', [
             'template' => 'home',
-//            'params'   => ['companies' => $this->_getCompanies()],
+            'params'   => ['products' => $this->_getProducts()],
 //            'params'   => ['products' => $products, 'pages' => $pages]
         ]);
     }
@@ -53,10 +54,15 @@ class IndexController extends AbstractController
         ]);
     }
 
-    protected function _getCompanies()
+    /**
+     * Get products
+     * 
+     * @return Collection
+     */
+    protected function _getProducts()
     {
-        /** @var \App\Model\Company $company */
-        $company = $this->_di->get('Company');
-        return $company->getCollection()->loadAll($company);
+        /** @var \App\Model\Product $product */
+        $product = $this->_di->get('Product');
+        return $product->getCollection()->loadAll($product);
     }
 }

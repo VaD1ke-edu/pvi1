@@ -8,7 +8,7 @@ use App\App;
  *
  * @category   App
  * @package    App
- * @subpackage App
+ * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
 

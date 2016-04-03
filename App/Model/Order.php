@@ -8,7 +8,7 @@ use \App\Model\Core\Entity as EntityAbstract;
  *
  * @category   App
  * @package    App
- * @subpackage Bot
+ * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
 class Order extends EntityAbstract

@@ -1,31 +1,31 @@
 <?php
-namespace App\Model;
+namespace App\Model\Admin;
 
 use \App\Model\Core\Entity as EntityAbstract;
 
 /**
- * Category entity model
+ * Admin entity model
  *
  * @category   App
  * @package    App
  * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
-class Category extends EntityAbstract
+class User extends EntityAbstract
 {
     /**
-     * Column ID column name
+     * User ID column name
      */
-    const COLUMN_CATEGORY_ID = 'id';
+    const COLUMN_ITEM_ID = 'id';
     /**
-     * Category name column name
+     * Username column name
      */
-    const COLUMN_CATEGORY_NAME = 'name';
+    const COLUMN_USERNAME = 'name';
 
     /**
      * Table name
      *
      * @var string
      */
-    protected $_tableName = 'category';
+    protected $_tableName = 'admin_user';
 }
