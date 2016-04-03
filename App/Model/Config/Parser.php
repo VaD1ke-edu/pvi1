@@ -2,6 +2,7 @@
 namespace App\Model\Config;
 
 use App\App;
+use App\Model\MagicObject;
 
 /**
  * Config parser
@@ -12,7 +13,7 @@ use App\App;
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
 
-class Parser
+class Parser extends MagicObject
 {
     /**
      * Config path
@@ -20,12 +21,6 @@ class Parser
      * @var string
      */
     protected $_configPath;
-    /**
-     * Underscore cache
-     *
-     * @var array
-     */
-    protected static $_underscoreCache = [];
 
     /**
      * Object initialization
@@ -57,23 +52,5 @@ class Parser
         $config = parse_ini_file($this->_configPath);
 
         return $config['database_driver'];
-    }
-
-
-    /**
-     * Converts config field names for magic getters
-     *
-     * @param string $name Method name
-     * @return string
-     */
-    protected function _underscore($name)
-    {
-        if (isset(self::$_underscoreCache[$name])) {
-            return self::$_underscoreCache[$name];
-        }
-
-        $result = strtolower(preg_replace('/(.)([A-Z])/', "$1_$2", $name));
-        self::$_underscoreCache[$name] = $result;
-        return $result;
     }
 }

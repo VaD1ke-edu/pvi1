@@ -92,19 +92,50 @@ class DiC
      */
     private function _assembleEntities()
     {
-        $this->_im->addAlias('Employee', 'App\Model\Employee');
+        $this->_im->addAlias('AdminUser', 'App\Model\Admin\User');
         $this->_im->addAlias('Category', 'App\Model\Category');
-        $this->_im->addAlias('Company', 'App\Model\Company');
+        $this->_im->addAlias('Customer', 'App\Model\Customer');
+        $this->_im->addAlias('Order', 'App\Model\Order');
+        $this->_im->addAlias('OrderItem', 'App\Model\Order\Item');
+        $this->_im->addAlias('Product', 'App\Model\Product');
+        $this->_im->addAlias('Quote', 'App\Model\Quote');
+        $this->_im->addAlias('QuoteItem', 'App\Model\Quote\Item');
 
         $this->_im->setParameters(
-            'Employee', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+            'AdminUser', ['collection' => $this->_di->newInstance('App\Model\Admin\User\Collection')]
         );
         $this->_im->setParameters(
             'Category', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
         );
         $this->_im->setParameters(
-            'Company', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+            'Customer', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
         );
+        $this->_im->setParameters(
+            'Order', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+        );
+        $this->_im->setParameters(
+            'OrderItem', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+        );
+        $this->_im->setParameters(
+            'Product', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+        );
+        $this->_im->setParameters(
+            'Quote', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+        );
+        $this->_im->setParameters(
+            'QuoteItem', ['collection' => $this->_di->newInstance('App\Model\Core\Entity\Collection')]
+        );
+    }
+
+    /**
+     * Assemble other (not entities) models
+     *
+     * @return void
+     */
+    private function _assembleModels()
+    {
+        $this->_im->addAlias('Session', 'App\Model\Session');
+        $this->_im->setParameters('App\Model\Session', ['di' => $this->_di]);
     }
 
     /**

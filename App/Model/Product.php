@@ -11,6 +11,17 @@ use \App\Model\Core\Entity as EntityAbstract;
  * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
+
+/**
+ * @method string getName()
+ * @method $this  setName(string $name)
+ * @method string getPrice()
+ * @method $this  setPrice(float $password)
+ * @method string getQty()
+ * @method $this  setQty(int $qty)
+ * @method string getCategoryId()
+ * @method $this  setCategoryId(int $categoryId)
+ */
 class Product extends EntityAbstract
 {
     /**

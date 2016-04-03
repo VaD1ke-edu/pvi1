@@ -1,29 +1,46 @@
 <?php
 namespace App\Model;
 
-use \App\Model\Resource\DBCollection;
-use \App\Model\Resource\DBEntity;
-use \App\Model\Resource\PDOHelper;
-use \App\Model\Resource\Table\Admin as AdminTable;
-use \App\Model\Resource\Table\Customer as CustomerTable;
+use \App\Model\Admin\User as AdminUser;
+use \App\Model\Customer as Customer;
 
+/**
+ * Session model
+ *
+ * @category   App
+ * @package    App
+ * @subpackage Model
+ * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
+ */
 class Session
 {
-    public function __construct()
+    /**
+     * Dependency injector
+     *
+     * @var \Zend\Di\Di
+     */
+    private $_di;
+
+    /**
+     * Session constructor
+     * @param \Zend\Di\Di $di Dependency injector
+     */
+    public function __construct($di)
     {
+        $this->_di = $di;
         if (session_status() != PHP_SESSION_ACTIVE) {
             session_start();
         }
     }
 
-    public function register(array $customerInfo)
+    public function register(array $customerData)
     {
-        $resource = new DBEntity(PDOHelper::getPdo(), new CustomerTable);
-
-        $customerInfo['password'] = md5($customerInfo['password']);
-        $customer = new Customer($customerInfo);
+        $customerData['password'] = $this->_hashPassword($customerData['password']);
+        /** @var Customer $customer */
+        $customer = $this->_di->newInstance('Customer');
+        $customer->setData($customerData);
         try {
-            $customer->save($resource);
+            $customer->save();
             return true;
         } catch (\Exception $ex) {
             return false;
@@ -34,7 +51,7 @@ class Session
     {
         $customers = new DBCollection(PDOHelper::getPdo(), new CustomerTable);
         $customers->filterBy('login', $customer->getLogin());
-        $customers->filterBy('password', md5($customer->getPassword()));
+        $customers->filterBy('password', $this->_hashPassword($customer->getPassword()));
 
         try {
             $fetchedCustomers = $customers->fetch();
@@ -52,25 +69,25 @@ class Session
         }
     }
 
-    public function authAdmin(Admin $admin)
+    public function authAdmin(AdminUser $admin)
     {
-        $admins = new DBCollection(PDOHelper::getPdo(), new AdminTable);
-        $admins->filterBy('login', $admin->getLogin());
-        $admins->filterBy('password', md5($admin->getPassword()));
-
+        $adminLoginData = $admin->getData();
         try {
-            $fetchedAdmins = $admins->fetch();
+            /** @var \App\Model\Admin\User\Collection $admins */
+            $admins = $admin->getCollection();
+            $admins->findByName($admin);
+            /** @var AdminUser $fetchedAdmin */
+            $fetchedAdmin = $admins->fetchItem();
         } catch (\Exception $ex) {
-            $fetchedAdmins = [];
-            var_dump($ex);
+            $fetchedAdmin = null;
         }
 
-        if (count($fetchedAdmins) == 1) {
-            $_SESSION['admin'] = reset($fetchedAdmins);
-            return true;
-        } else {
+        if (!$fetchedAdmin || !$this->_verifyPassword($adminLoginData['password'], $fetchedAdmin->getPassword())) {
             return false;
         }
+
+        $_SESSION['admin'] = $fetchedAdmin->getName();
+        return true;
     }
 
     public function logout()
@@ -138,5 +155,30 @@ class Session
     public function setQuoteId($id)
     {
         $_SESSION['quote_id'] = $id;
+    }
+
+
+    /**
+     * Hash password
+     *
+     * @param string $password Password
+     * @return string
+     */
+    protected function _hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    /**
+     * Verify password
+     *
+     * @param string $password Password
+     * @param string $hash     Hash
+     *
+     * @return bool
+     */
+    protected function _verifyPassword($password, $hash)
+    {
+        return password_verify($password, $hash);
     }
 }

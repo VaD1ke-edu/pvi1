@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use App\Model\RouterException;
+
 /**
  * Application
  *
@@ -47,24 +49,25 @@ class App
      */
     public function run()
     {
+        $routePath = $this->_getRoutePath();
         try {
-            $defaultPath = 'index_index';
-            $routePath = isset($_GET['page']) ? $_GET['page'] : $defaultPath ;
             $router = new Model\Router($routePath);
             $controllerName = $router->getController();
             $actionName = $router->getAction();
             if (!class_exists($controllerName) || !method_exists($controllerName, $actionName)) {
-                throw new Model\RouterException('Class or method are not exist');
+                throw new RouterException('Class or method are not exist');
             }
-        } catch (Model\RouterException $e) {
+        } catch (RouterException $e) {
             $controllerName = '\App\Controller\NoRouteController';
-            $actionName = 'notFoundAction';
+            $actionName = 'indexAction';
         }
 
         $dic = new Model\DiC($this->_di);
         $dic->assemble();
 
+        /** @var \App\Controller\AbstractController $controller */
         $controller = new $controllerName($this->_di);
+        $controller->preDispatch($routePath);
         if ($view = $controller->$actionName()) {
             $view->render();
         }
@@ -94,5 +97,38 @@ class App
             self::$_viewDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR);
         }
         return self::$_viewDir;
+    }
+
+
+    /**
+     * Get route path
+     *
+     * @return string
+     */
+    protected function _getRoutePath()
+    {
+        $defaultPath = 'index_index';
+
+
+
+        if (!isset($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI'] == '/') {
+            return $defaultPath;
+        }
+
+        if ($requestUri = explode('?', $_SERVER['REQUEST_URI'], 2)) {
+            $requestUri = reset($requestUri);
+        }
+
+        $requestPath = array_filter(explode('/', $requestUri));
+
+        if (count($requestPath) > 2) {
+            $requestPath = reset($requestPath);
+        }
+        if (count($requestPath) == 1) {
+            $requestPath[] = 'index';
+        }
+        $requestPath = implode('_', $requestPath);
+
+        return $requestPath;
     }
 }

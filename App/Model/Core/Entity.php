@@ -1,5 +1,6 @@
 <?php
 namespace App\Model\Core;
+use App\Model\MagicObject;
 
 /**
  * Entity abstract
@@ -9,7 +10,7 @@ namespace App\Model\Core;
  * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
-abstract class Entity
+abstract class Entity extends MagicObject
 {
     /**
      * Table name
@@ -109,37 +110,6 @@ abstract class Entity
     public function getId()
     {
         return $this->_data[$this->_primaryKey];
-    }
-
-    /**
-     * Set data
-     *
-     * @param array $data Data
-     *
-     * @return $this
-     */
-    public function setData(array $data)
-    {
-        $this->_data = $data;
-
-        return $this;
-    }
-    /**
-     * Get data
-     *
-     * @param string $param Parameter
-     * @return array
-     */
-    public function getData($param = '')
-    {
-        if ($param) {
-            if (array_key_exists($param, $this->_data)) {
-                return $this->_data[$param];
-            }
-            return null;
-        }
-
-        return $this->_data;
     }
 
     /**

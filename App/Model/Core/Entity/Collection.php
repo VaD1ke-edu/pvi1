@@ -75,6 +75,7 @@ class Collection
      */
     public function load(Entity $entity)
     {
+        $this->_entity = $entity;
         $this->_sqlObject = $this->getSelect();
         $this->_sqlObject
             ->from($entity->getTableName())
@@ -204,8 +205,10 @@ class Collection
             $this->_fetchingStarted = true;
             return $this->_entity->setData(reset($this->_items));
         }
-
-        return $this->_entity->setData(next($this->_items));
+        if ($nextItem = next($this->_items)) {
+            return $this->_entity->setData($nextItem);
+        }
+        return null;
     }
 
     /**

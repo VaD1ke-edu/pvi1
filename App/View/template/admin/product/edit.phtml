@@ -1,0 +1,18 @@
+<?php /** @var \App\Model\View\Renderer $this */ ?>
+
+<?php /** @var App\Model\Product $_product */ ?>
+<?php if ($_product = $this->getData('product')): ?>
+    <form>
+        <label for="name">Название</label>
+        <input type="text" name="name" id="name" value="<?php echo $_product->getName() ?>">
+        <label for="price">Цена</label>
+        <input type="text" name="price" id="price" value="<?php echo $_product->getPrice() ?>">
+        <label for="qty">Количество</label>
+        <input type="text" name="qty" id="qty" value="<?php echo $_product->getQty() ?>">
+        <label for="category_id">Категория</label>
+        <input type="text" name="category_id" id="category_id" value="<?php echo $_product->getCategoryId() ?>">
+        <input type="submit" value="Сохранить">
+    </form>
+<?php else: ?>
+    <h1>Такого товара нет :(</h1>
+<?php endif; ?>

@@ -34,9 +34,10 @@ class AbstractController
      * Pre dispatch method
      * (for checking authentication, access control or something else before dispatch)
      *
+     * @param string $route Route path
      * @return $this
      */
-    public function preDispatch()
+    public function preDispatch($route)
     {
         return $this;
     }
@@ -48,13 +49,15 @@ class AbstractController
      * @param string $page   Page to redirect
      * @param array  $params Params
      *
-     * @return void
+     * @return $this
      */
     protected function _redirect($page, $params = [])
     {
-        $urlParams = ['page' => $page];
-        $urlParams = array_merge($urlParams, $params);
-        header('Location: /?' . \http_build_query($urlParams));
+//        $urlParams = ['page' => $page];
+//        $urlParams = array_merge($urlParams, $params);
+//        header('Location: /?' . \http_build_query($urlParams));
+        header('Location: /' . $page . \http_build_query($params));
+        return $this;
     }
 
     /**
