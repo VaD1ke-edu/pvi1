@@ -28,14 +28,14 @@ class IndexController extends AbstractController
 //        $product = $this->_di->get('Product');
 //        $products = $this->_di->get('ProductCollection', ['resource' => $resource, 'productPrototype' => $product]);
         /** @var \App\Model\Employee $employee */
-        $employee = $this->_di->get('Employee');
+//        $employee = $this->_di->get('Employee');
 
 
 
 
         return $this->_di->get('View', [
             'template' => 'home',
-            'params'   => ['companies' => $this->_getCompanies()],
+//            'params'   => ['companies' => $this->_getCompanies()],
 //            'params'   => ['products' => $products, 'pages' => $pages]
         ]);
     }

@@ -66,4 +66,13 @@ class AbstractController
     {
         return strtolower($_SERVER['REQUEST_METHOD']) == 'post';
     }
+
+    
+    private function _isAdminLoggedIn()
+    {
+        $session = $this->_di->get('Session');
+        if (!$session->isAdminLoggedIn()) {
+            $this->_redirect('admin_login');
+        }
+    }
 }
