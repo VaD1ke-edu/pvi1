@@ -77,6 +77,7 @@ class DiC
      */
     private function _assembleCollection()
     {
+        $this->_im->setParameters('App\DB\Adapter\Connect', ['config' => 'App\Model\Config\Parser']);
         $this->_im->setParameters('Zend\Db\Sql\Sql', [
             'adapter' => $this->_di->get('App\DB\Adapter\Connect')->getAdapter()
         ]);
@@ -142,16 +143,6 @@ class DiC
 //        $this->_im->setParameters('App\Bot\Command\Deregister', [
 //            'chat'   => $this->_di->get('Chat')
 //        ]);
-    }
-
-    /**
-     * Assemble redmine
-     *
-     * @return void
-     */
-    private function _assembleRedmine()
-    {
-//        $this->_im->addAlias('RedmineUpdater', 'App\Redmine\Updater');
     }
 
     /**

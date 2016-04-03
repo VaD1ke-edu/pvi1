@@ -19,6 +19,22 @@ class Connect
      * @var Adapter
      */
     private static $_adapter;
+    /**
+     * Config parser
+     *
+     * @var \App\Model\Config\Parser
+     */
+    protected static $_config;
+
+    /**
+     * Object initialization
+     *
+     * @param \App\Model\Config\Parser $config Config parser
+     */
+    public function __construct($config)
+    {
+        self::$_config = $config;
+    }
 
     /**
      * Connect database
@@ -32,10 +48,10 @@ class Connect
         }
 
         $dbName = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR
-                 . '..' . DIRECTORY_SEPARATOR . "Database/pvi1.db";
+                 . '..' . DIRECTORY_SEPARATOR . self::$_config->getDatabaseName();
 
         self::$_adapter = new Adapter([
-            'driver'   => 'Pdo_Sqlite',
+            'driver'   => self::$_config->getDatabaseDriverName(),
             'database' => $dbName
         ]);
 

@@ -1,5 +1,5 @@
 <?php
-namespace App\Config;
+namespace App\Model\Config;
 
 use App\App;
 
@@ -32,24 +32,7 @@ class Parser
      */
     public function __construct()
     {
-        $this->_configPath = App::getRootDir() . 'Config' . DIRECTORY_SEPARATOR . 'Config.ini';
-    }
-
-    public function __get($name)
-    {
-
-    }
-
-    /**
-     * Get bot api
-     *
-     * @return string
-     */
-    public function getBotToken()
-    {
-        $config = parse_ini_file($this->_configPath);
-
-        return $config['bot_token'];
+        $this->_configPath = App::getRootDir() . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'Config.ini';
     }
 
     /**
@@ -63,6 +46,19 @@ class Parser
 
         return $config['database_name'];
     }
+
+    /**
+     * Get database driver name
+     *
+     * @return string
+     */
+    public function getDatabaseDriverName()
+    {
+        $config = parse_ini_file($this->_configPath);
+
+        return $config['database_driver'];
+    }
+
 
     /**
      * Converts config field names for magic getters
