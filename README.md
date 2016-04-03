@@ -1,5 +1,4 @@
-# Программирование в Интернете. Лабораторная работа №1
+# Программирование в Интернет. Лабораторная работа №1
 
-php5-fpm
-sqlite3
-apt-get install php5-pgsql php5-sqlite# pvi1
+## Чо надо вытворить:
+apt-get install sqlite3 php5-fpm php5-pgsql php5-sqlite
