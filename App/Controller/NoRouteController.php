@@ -11,7 +11,7 @@ use App\App;
  * @subpackage Controller
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
-class NoRouteController
+class NoRouteController extends AbstractController
 {
     public function indexAction()
     {

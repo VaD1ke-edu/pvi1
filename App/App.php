@@ -109,8 +109,6 @@ class App
     {
         $defaultPath = 'index_index';
 
-
-
         if (!isset($_SERVER['REQUEST_URI']) || $_SERVER['REQUEST_URI'] == '/') {
             return $defaultPath;
         }
@@ -121,11 +119,14 @@ class App
 
         $requestPath = array_filter(explode('/', $requestUri));
 
-        if (count($requestPath) > 2) {
+        if (count($requestPath) > 3) {
             $requestPath = reset($requestPath);
         }
         if (count($requestPath) == 1) {
             $requestPath[] = 'index';
+        }
+        if (reset($requestPath) == 'admin' && count($requestPath) < 3) {
+            array_splice($requestPath, 1, 0, ['index']);
         }
         $requestPath = implode('_', $requestPath);
 

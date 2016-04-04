@@ -1,8 +1,6 @@
 <?php
 namespace App\Controller\Admin;
 
-use Zend\Di\Di;
-
 /**
  * Abstract admin controller
  *
@@ -11,51 +9,28 @@ use Zend\Di\Di;
  * @subpackage Controller
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
-class AbstractController
+class AbstractController extends \App\Controller\AbstractController
 {
     /**
-     * Dependency injector
-     *
-     * @var Di
+     * Login route
      */
-    protected $_di;
-
-    /**
-     * Controller initialization
-     *
-     * @param Di $di Dependency injector
-     */
-    public function __construct(Di $di)
-    {
-        $this->_di = $di;
-    }
+    const LOGIN_ROUTE = 'admin_index_login';
 
     /**
      * Pre dispatch method
      * (for checking authentication, access control or something else before dispatch)
      *
+     * @param string $route Route path
      * @return $this
      */
-    public function preDispatch()
+    public function preDispatch($route)
     {
+        if (!$this->_isAdminLoggedIn() && $route != self::LOGIN_ROUTE) {
+            return $this->_redirect('admin/login');
+        }
         return $this;
     }
 
-
-    /**
-     * Redirect
-     *
-     * @param string $page   Page to redirect
-     * @param array  $params Params
-     *
-     * @return void
-     */
-    protected function _redirect($page, $params = [])
-    {
-        $urlParams = ['page' => $page];
-        $urlParams = array_merge($urlParams, $params);
-        header('Location: /?' . \http_build_query($urlParams));
-    }
 
     /**
      * Check is request post
@@ -66,13 +41,16 @@ class AbstractController
     {
         return strtolower($_SERVER['REQUEST_METHOD']) == 'post';
     }
-
     
-    private function _isAdminLoggedIn()
+
+    /**
+     * Is admin logged in
+     *
+     * @return bool
+     */
+    protected function _isAdminLoggedIn()
     {
         $session = $this->_di->get('Session');
-        if (!$session->isAdminLoggedIn()) {
-            $this->_redirect('admin_login');
-        }
+        return $session->isAdminLoggedIn();
     }
 }

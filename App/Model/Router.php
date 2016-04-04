@@ -12,6 +12,12 @@ namespace App\Model;
 class Router
 {
     /**
+     * Is admin route
+     *
+     * @var bool
+     */
+    protected $_isAdminRoute = false;
+    /**
      * Controller name
      *
      * @var string
@@ -34,7 +40,11 @@ class Router
     {
         $parsedRoute = explode('_', $route);
         if (sizeof($parsedRoute) != 2) {
-            throw new RouterException('Invalid route path');
+            if (!(reset($parsedRoute) === 'admin' && sizeof($parsedRoute) === 3)) {
+                throw new RouterException('Invalid route path');
+            }
+            $this->_isAdminRoute = true;
+            array_shift($parsedRoute);
         }
         list($this->_controller, $this->_action) = $parsedRoute;
     }
@@ -46,7 +56,11 @@ class Router
      */
     public function getController()
     {
-        return '\\App\\Controller\\' . ucfirst($this->_controller) . 'Controller';
+        $controller = ucfirst($this->_controller);
+        if ($this->_isAdminRoute) {
+            $controller = 'Admin\\' . $controller;
+        }
+        return '\\App\\Controller\\' . $controller . 'Controller';
     }
 
     /**

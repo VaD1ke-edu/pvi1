@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 /**
  * Index controller
@@ -10,29 +10,8 @@ namespace App\Controller;
  * @subpackage Controller
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
-class AdminController extends AbstractController
+class IndexController extends AbstractController
 {
-    /**
-     * Login route
-     */
-    const LOGIN_ROUTE = 'admin_login';
-
-    /**
-     * Pre dispatch method
-     * (for checking authentication, access control or something else before dispatch)
-     *
-     * @param string $route Route path
-     * @return $this
-     */
-    public function preDispatch($route)
-    {
-        if (!$this->_isAdminLoggedIn() && $route != self::LOGIN_ROUTE) {
-            return $this->_redirect('admin/login');
-        }
-        return $this;
-    }
-    
-    
     /**
      * Index action
      *
@@ -63,7 +42,7 @@ class AdminController extends AbstractController
         $session = $this->_di->get('Session');
 
         if ($session->authAdmin($admin)) {
-            return $this->_redirect('admin/products');
+            return $this->_redirect('admin/product/list');
         }
 
         return $this->_redirect('index');
@@ -132,17 +111,5 @@ class AdminController extends AbstractController
         /** @var \App\Model\Product $product */
         $product = $this->_di->get('Product');
         return $product->getCollection()->loadAll($product);
-    }
-
-
-    /**
-     * Is admin logged in
-     *
-     * @return bool
-     */
-    private function _isAdminLoggedIn()
-    {
-        $session = $this->_di->get('Session');
-        return $session->isAdminLoggedIn();
     }
 }
