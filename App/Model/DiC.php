@@ -136,6 +136,8 @@ class DiC
     {
         $this->_im->addAlias('Session', 'App\Model\Session');
         $this->_im->setParameters('App\Model\Session', ['di' => $this->_di]);
+        
+        $this->_im->addAlias('FileUploader', 'App\Model\File\Uploader');
     }
 
     /**

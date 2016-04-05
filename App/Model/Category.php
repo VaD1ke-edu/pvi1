@@ -11,6 +11,10 @@ use \App\Model\Core\Entity as EntityAbstract;
  * @subpackage Model
  * @author     Vladislav Slesarenko <vladislav.slesarenko@gmail.com>
  */
+/**
+ * @method string getName()
+ * @method $this  setName(string $name)
+ */
 class Category extends EntityAbstract
 {
     /**

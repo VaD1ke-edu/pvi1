@@ -2,6 +2,8 @@
 
 namespace App\Controller\Admin;
 
+use \App\Model\Product as Product;
+
 /**
  * Index controller
  *
@@ -50,6 +52,9 @@ class ProductController extends AbstractController
         $product   = $this->_di->get('Product');
         $product->setId($productId);
         $products = $product->getCollection()->load($product);
+        /** @var \App\Model\Category $category */
+        $category = $this->_di->get('Category');
+        $categories = $category->getCollection()->loadAll($category);
 
         if (!($product = $products->fetchItem())) {
             return $this->_redirect('admin/products');
@@ -57,8 +62,45 @@ class ProductController extends AbstractController
 
         return $this->_di->get('View', [
             'template' => 'admin/product/edit',
-            'params'   => ['product' => $product],
+            'params'   => [
+                'product'    => $product,
+                'categories' => $categories,
+            ],
         ]);
+    }
+
+    /**
+     * Product saving action
+     *
+     * @return $this
+     */
+    public function saveAction()
+    {
+        $post = $_POST['product'];
+        if (!$post) {
+            return $this->_redirect('admin/product/list');
+        }
+
+        /** @var \App\Model\Product $product */
+        $product = $this->_di->get('Product');
+        
+        $product->setData($post);
+        if (!($_FILES && array_key_exists('product', $_FILES))) {
+            return $this->_redirect('admin/product/list');
+        }
+
+        /** @var \App\Model\File\Uploader $uploader */
+        $uploader = $this->_di->get('FileUploader');
+        $imageName = $uploader->setPath(Product::IMAGES_DIR)
+            ->setFileFieldName('image')
+            ->setFileData($_FILES['product'])
+            ->upload();
+        if ($imageName) {
+            $product->setImage($imageName);
+        }
+        $product->save();
+        
+        return $this->_redirect('admin/product/list');
     }
 
 

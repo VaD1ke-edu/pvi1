@@ -1,16 +1,33 @@
 <?php /** @var \App\Model\View\Renderer $this */ ?>
 
-<?php /** @var App\Model\Product $_product */ ?>
-<?php if ($_product = $this->getData('product')): ?>
-    <form>
+<?php
+/** @var App\Model\Product $product */
+$product = $this->getData('product');
+/** @var \App\Model\Core\Entity\Collection $categories */
+$categories = $this->getData('categories');
+?>
+
+<?php if ($product): ?>
+    <form action="/admin/product/save" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?php $product->getId() ?>">
         <label for="name">Название</label>
-        <input type="text" name="name" id="name" value="<?php echo $_product->getName() ?>">
+        <input type="text" name="product[name]" id="name" value="<?php echo $product->getName() ?>">
         <label for="price">Цена</label>
-        <input type="text" name="price" id="price" value="<?php echo $_product->getPrice() ?>">
+        <input type="text" name="product[price]" id="price" value="<?php echo $product->getPrice() ?>">
         <label for="qty">Количество</label>
-        <input type="text" name="qty" id="qty" value="<?php echo $_product->getQty() ?>">
+        <input type="text" name="product[qty]" id="qty" value="<?php echo $product->getQty() ?>">
         <label for="category_id">Категория</label>
-        <input type="text" name="category_id" id="category_id" value="<?php echo $_product->getCategoryId() ?>">
+        <select name="product[category_id]" id="category_id">
+            <?php /** @var App\Model\Category $category */ ?>
+            <?php while ($category = $categories->fetchItem()): ?>
+                <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+            <?php endwhile; ?>
+        </select>
+        <label for="image">Изображение</label>
+        <?php if ($product->getImage()): ?>
+            <img src="<?php echo $product->getImageUrl() ?>" alt="<?php echo $product->getName() ?>" width="100px" height="50px">
+        <?php endif; ?>
+        <input type="file" name="product[image]" id="image" value="<?php echo $product->getImage() ?>">
         <input type="submit" value="Сохранить">
     </form>
 <?php else: ?>

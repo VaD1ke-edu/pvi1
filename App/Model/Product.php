@@ -21,6 +21,8 @@ use \App\Model\Core\Entity as EntityAbstract;
  * @method $this  setQty(int $qty)
  * @method string getCategoryId()
  * @method $this  setCategoryId(int $categoryId)
+ * @method string getImage()
+ * @method $this  setImage(int $image)
  */
 class Product extends EntityAbstract
 {
@@ -44,6 +46,10 @@ class Product extends EntityAbstract
      * Category ID column name
      */
     const COLUMN_CATEGORY_ID = 'category_id';
+    /**
+     * Images directory name
+     */
+    const IMAGES_DIR = 'product';
 
     /**
      * Table name
@@ -51,4 +57,14 @@ class Product extends EntityAbstract
      * @var string
      */
     protected $_tableName = 'product';
+
+    /**
+     * Get image URL
+     *
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return \App\App::getBaseUrl() . \App\Model\File\Uploader::MEDIA_DIR . DIRECTORY_SEPARATOR . $this->getImage();
+    }
 }

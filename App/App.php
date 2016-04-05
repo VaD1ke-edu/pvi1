@@ -99,6 +99,16 @@ class App
         return self::$_viewDir;
     }
 
+    /**
+     * Get base URL
+     *
+     * @return string
+     */
+    public static function getBaseUrl()
+    {
+        return 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR;
+    }
+
 
     /**
      * Get route path

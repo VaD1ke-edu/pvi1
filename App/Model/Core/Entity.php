@@ -68,6 +68,8 @@ abstract class Entity extends MagicObject
      */
     public function save()
     {
+        $this->_beforeSave();
+        
         if ($this->_isRowExist()) {
             $this->_collection->update($this);
         } else {
@@ -142,6 +144,16 @@ abstract class Entity extends MagicObject
         return $this->_collection;
     }
 
+
+    /**
+     * Call before entity saving
+     * 
+     * @return $this
+     */
+    protected function _beforeSave()
+    {
+        return $this;
+    }
 
     /**
      * Is ID exist
