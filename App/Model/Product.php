@@ -49,7 +49,7 @@ class Product extends EntityAbstract
     /**
      * Images directory name
      */
-    const IMAGES_DIR = 'product';
+    const IMAGES_DIR = 'catalog/product';
 
     /**
      * Table name
@@ -65,6 +65,6 @@ class Product extends EntityAbstract
      */
     public function getImageUrl()
     {
-        return \App\App::getBaseUrl() . \App\Model\File\Uploader::MEDIA_DIR . DIRECTORY_SEPARATOR . $this->getImage();
+        return \App\App::getBaseUrl() . \App\Model\File\Uploader::MEDIA_DIR . DS . $this->getImage();
     }
 }

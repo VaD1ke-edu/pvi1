@@ -1,5 +1,6 @@
 <?php
 namespace App;
+define('DS', DIRECTORY_SEPARATOR);
 
 use App\Model\RouterException;
 
@@ -81,7 +82,7 @@ class App
     public static function getRootDir()
     {
         if (!self::$_rootDir) {
-            self::$_rootDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . '..');
+            self::$_rootDir = realpath(__DIR__ . DS . '..');
         }
         return self::$_rootDir;
     }
@@ -94,7 +95,7 @@ class App
     public static function getViewDir()
     {
         if (!self::$_viewDir) {
-            self::$_viewDir = realpath(__DIR__ . DIRECTORY_SEPARATOR . 'View' . DIRECTORY_SEPARATOR);
+            self::$_viewDir = realpath(__DIR__ . DS . 'View' . DS);
         }
         return self::$_viewDir;
     }
@@ -106,7 +107,7 @@ class App
      */
     public static function getBaseUrl()
     {
-        return 'http://' . $_SERVER['HTTP_HOST'] . DIRECTORY_SEPARATOR;
+        return 'http://' . $_SERVER['HTTP_HOST'] . DS;
     }
 
 

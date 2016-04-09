@@ -64,9 +64,9 @@ class Uploader
             @mkdir($dirPath, 0777);
         }
         $newFileName = $this->_getFileName($this->_fileData['name'][$this->_fileFieldName]);
-        $newFilePath = $dirPath . DIRECTORY_SEPARATOR . $newFileName;
+        $newFilePath = $dirPath . DS . $newFileName;
         if (copy($this->_fileData['tmp_name'][$this->_fileFieldName], $newFilePath)) {
-            return $this->_path . DIRECTORY_SEPARATOR . $newFileName;
+            return $this->_path . DS . $newFileName;
         }
         return '';
     }
@@ -128,7 +128,7 @@ class Uploader
      */
     protected function _getMediaPath()
     {
-        return App::getRootDir() . DIRECTORY_SEPARATOR . self::MEDIA_DIR .  DIRECTORY_SEPARATOR;
+        return App::getRootDir() . DS . self::MEDIA_DIR .  DS;
     }
 
     /**

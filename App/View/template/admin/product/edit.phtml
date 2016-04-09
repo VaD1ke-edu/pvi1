@@ -9,7 +9,7 @@ $categories = $this->getData('categories');
 
 <?php if ($product): ?>
     <form action="/admin/product/save" method="post" enctype="multipart/form-data">
-        <input type="hidden" value="<?php $product->getId() ?>">
+        <input name="product[id]" type="hidden" value="<?php echo $product->getId() ?>">
         <label for="name">Название</label>
         <input type="text" name="product[name]" id="name" value="<?php echo $product->getName() ?>">
         <label for="price">Цена</label>
@@ -20,7 +20,10 @@ $categories = $this->getData('categories');
         <select name="product[category_id]" id="category_id">
             <?php /** @var App\Model\Category $category */ ?>
             <?php while ($category = $categories->fetchItem()): ?>
-                <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                <option value="<?php echo $category->getId() ?>"
+                    <?php if($category->getId() == $product->getCategoryId()) echo ' selected' ?>>
+                    <?php echo $category->getName() ?>
+                </option>
             <?php endwhile; ?>
         </select>
         <label for="image">Изображение</label>
@@ -28,6 +31,9 @@ $categories = $this->getData('categories');
             <img src="<?php echo $product->getImageUrl() ?>" alt="<?php echo $product->getName() ?>" width="100px" height="50px">
         <?php endif; ?>
         <input type="file" name="product[image]" id="image" value="<?php echo $product->getImage() ?>">
+        <button id="delete-product" data-url="/admin/product/delete?id=<?php echo $product->getId()?>">
+            Удалить
+        </button>
         <input type="submit" value="Сохранить">
     </form>
 <?php else: ?>

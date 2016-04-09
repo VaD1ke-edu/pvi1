@@ -45,7 +45,7 @@ class ProductController extends AbstractController
     public function editAction()
     {
         if (!isset($_GET['id']) || !($productId = $_GET['id'])) {
-            return $this->_redirect('admin/products');
+            return $this->_redirect('admin/product/list');
         }
 
         /** @var \App\Model\Product $product */
@@ -68,6 +68,20 @@ class ProductController extends AbstractController
             ],
         ]);
     }
+    
+    public function newAction()
+    {
+        /** @var \App\Model\Category $category */
+        $category = $this->_di->get('Category');
+        $categories = $category->getCollection()->loadAll($category);
+
+        return $this->_di->get('View', [
+            'template' => 'admin/product/new',
+            'params'   => [
+                'categories' => $categories,
+            ],
+        ]);
+    }
 
     /**
      * Product saving action
@@ -75,7 +89,7 @@ class ProductController extends AbstractController
      * @return $this
      */
     public function saveAction()
-    {
+    {        
         $post = $_POST['product'];
         if (!$post) {
             return $this->_redirect('admin/product/list');
@@ -99,6 +113,24 @@ class ProductController extends AbstractController
             $product->setImage($imageName);
         }
         $product->save();
+        
+        return $this->_redirect('admin/product/list');
+    }
+
+    /**
+     * Delete action
+     * 
+     * @return $this
+     */
+    public function deleteAction()
+    {
+        if (!isset($_GET['id']) || !($productId = $_GET['id'])) {
+            return $this->_redirect('admin/product/list');
+        }
+        
+        /** @var \App\Model\Product $product */
+        $product = $this->_di->get('Product');
+        $product->setId($productId)->delete();
         
         return $this->_redirect('admin/product/list');
     }

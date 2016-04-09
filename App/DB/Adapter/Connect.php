@@ -47,8 +47,8 @@ class Connect
             return self::$_adapter;
         }
 
-        $dbName = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR
-                 . '..' . DIRECTORY_SEPARATOR . self::$_config->getDatabaseName();
+        $dbName = __DIR__ . DS . '..' . DS . '..' . DS
+                 . '..' . DS . self::$_config->getDatabaseName();
 
         self::$_adapter = new Adapter([
             'driver'   => self::$_config->getDatabaseDriverName(),

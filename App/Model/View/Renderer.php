@@ -39,11 +39,11 @@ class Renderer
      */
     public function __construct($template, $layout = 'base', $params = [], $layoutDir = '', $templateDir = '')
     {
-        $this->_layout = $layout;
-        $this->_template = $template;
-        $this->_params = $params;
-        $this->_layoutDir = $layoutDir ?: App::getViewDir() . DIRECTORY_SEPARATOR . 'layout' . DIRECTORY_SEPARATOR;
-        $this->_templateDir = $templateDir ?: App::getViewDir() . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR;
+        $this->_layout      = $layout;
+        $this->_template    = $template;
+        $this->_params      = $params;
+        $this->_layoutDir   = $layoutDir ?: App::getViewDir() . DS . 'layout' . DS;
+        $this->_templateDir = $templateDir ?: App::getViewDir() . DS . 'template' . DS;
     }
 
     /**

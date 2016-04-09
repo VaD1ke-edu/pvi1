@@ -15,6 +15,6 @@ class NoRouteController extends AbstractController
 {
     public function indexAction()
     {
-        require_once App::getViewDir() . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR . '404.phtml';
+        require_once App::getViewDir() . DS . 'template' . DS . '404.phtml';
     }
 }

@@ -186,8 +186,8 @@ class DiC
     private function _assembleView()
     {
         $this->_im->setParameters('\App\Model\View\Renderer', [
-            'layoutDir'   => App::getViewDir() . 'layout' . DIRECTORY_SEPARATOR,
-            'templateDir' => App::getViewDir() . 'template' . DIRECTORY_SEPARATOR,
+            'layoutDir'   => App::getViewDir() . 'layout' . DS,
+            'templateDir' => App::getViewDir() . 'template' . DS,
             'layout'      => 'base',
             'params'      => [],
         ]);

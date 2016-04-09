@@ -27,7 +27,7 @@ class Parser extends MagicObject
      */
     public function __construct()
     {
-        $this->_configPath = App::getRootDir() . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'Config.ini';
+        $this->_configPath = App::getRootDir() . DS . 'Config' . DS . 'Config.ini';
     }
 
     /**
