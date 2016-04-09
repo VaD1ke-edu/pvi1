@@ -1,13 +1,31 @@
 <?php /** @var \App\Model\View\Renderer $this */ ?>
 
-<?php /** @var App\Model\Core\Entity\Collection $_products */ ?>
-<?php $_products = $this->getData('products') ?>
+<?php ?>
+<?php
+/** @var App\Model\Core\Entity\Collection $_products */
+$_products = $this->getData('products');
+/** @var App\Model\Core\Entity\Collection $_categories */
+$_categories = $this->getData('categories');
+?>
+<?php if ($_categories && $_categories->getSize()): ?>
+    <h1>Категории</h1>
+    <ul>
+        <?php /** @var App\Model\Category $category */ ?>
+        <?php while ($category = $_categories->fetchItem()): ?>
+            <li><?php echo $category->getName() ?></li>
+        <?php endwhile; ?>
+    </ul>
+<?php endif; ?>
 <?php if ($_products && $_products->getSize()): ?>
     <h1>Товары</h1>
+    <input type="text" placeholder="Поиск по товарам">
     <?php while ($_product = $_products->fetchItem()): ?>
         <div><?php echo $_product->getName() ?></div>
         <div><?php echo $_product->getPrice() . ' руб.' ?></div>
         <div><?php echo $_product->getCategoryId() ?></div>
+        <?php if ($_product->getImage()): ?>
+            <div><img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>" width="300px" height="150px"></div>
+        <?php endif; ?>
     <?php endwhile; ?>
 <?php else: ?>
     <h1>Пока нет товаров :(</h1>

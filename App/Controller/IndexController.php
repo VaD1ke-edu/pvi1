@@ -22,7 +22,10 @@ class IndexController extends AbstractController
     {
         return $this->_di->get('View', [
             'template' => 'home',
-            'params'   => ['products' => $this->_getProducts()],
+            'params'   => [
+                'products' => $this->_getProducts(),
+                'categories' => $this->_getCategories(),
+            ],
         ]);
     }
 
@@ -37,6 +40,7 @@ class IndexController extends AbstractController
         ]);
     }
 
+
     /**
      * Get products
      * 
@@ -47,5 +51,17 @@ class IndexController extends AbstractController
         /** @var \App\Model\Product $product */
         $product = $this->_di->get('Product');
         return $product->getCollection()->loadAll($product);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return Collection
+     */
+    protected function _getCategories()
+    {
+        /** @var \App\Model\Category $category */
+        $category = $this->_di->get('Category');
+        return $category->getCollection()->loadAll($category);
     }
 }

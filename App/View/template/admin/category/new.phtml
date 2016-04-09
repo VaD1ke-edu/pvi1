@@ -1,0 +1,12 @@
+<?php /** @var \App\Model\View\Renderer $this */ ?>
+
+<?php
+/** @var \App\Model\Core\Entity\Collection $categories */
+$categories = $this->getData('categories');
+?>
+<h2>Добавить новую категорию</h2>
+<form action="/admin/category/save" method="post" enctype="multipart/form-data">
+    <label for="name">Название</label>
+    <input type="text" name="category[name]" id="name"">
+    <input type="submit" value="Сохранить">
+</form>

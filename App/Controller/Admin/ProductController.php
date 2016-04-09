@@ -5,7 +5,7 @@ namespace App\Controller\Admin;
 use \App\Model\Product as Product;
 
 /**
- * Index controller
+ * Product controller
  *
  * @category   App
  * @package    App
@@ -33,6 +33,7 @@ class ProductController extends AbstractController
     {
         return $this->_di->get('View', [
             'template' => 'admin/product/list',
+            'layout'   => 'admin/base',
             'params'   => ['products' => $this->_getProducts()],
         ]);
     }
@@ -57,11 +58,12 @@ class ProductController extends AbstractController
         $categories = $category->getCollection()->loadAll($category);
 
         if (!($product = $products->fetchItem())) {
-            return $this->_redirect('admin/products');
+            return $this->_redirect('admin/product/list');
         }
 
         return $this->_di->get('View', [
             'template' => 'admin/product/edit',
+            'layout' => 'admin/base',
             'params'   => [
                 'product'    => $product,
                 'categories' => $categories,
@@ -77,6 +79,7 @@ class ProductController extends AbstractController
 
         return $this->_di->get('View', [
             'template' => 'admin/product/new',
+            'layout'   => 'admin/base',
             'params'   => [
                 'categories' => $categories,
             ],
@@ -139,7 +142,7 @@ class ProductController extends AbstractController
     /**
      * Get products
      *
-     * @return Collection
+     * @return \App\Model\Core\Entity\Collection
      */
     protected function _getProducts()
     {

@@ -1,0 +1,16 @@
+<?php /** @var \App\Model\View\Renderer $this */ ?>
+
+<?php /** @var App\Model\Core\Entity\Collection $categories */ ?>
+<?php $categories = $this->getData('categories') ?>
+<?php if ($categories && $categories->getSize()): ?>
+    <h1>Категории</h1>
+    <?php /** @var App\Model\Category $_category */ ?>
+    <?php while ($_category = $categories->fetchItem()): ?>
+        <div><?php echo $_category->getName() ?></div>
+        <a href="/admin/category/edit/?id=<?php echo $_category->getId() ?>">Редактировать</a>
+    <?php endwhile; ?>
+<?php else: ?>
+    <h1>Пока нет категорий :(</h1>
+<?php endif; ?>
+<br>
+<a href="/admin/category/new">Добавить</a>
