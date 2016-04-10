@@ -19,6 +19,9 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        if ($this->_isAdminLoggedIn()) {
+            return $this->_redirect('admin/product/list');
+        }
         return $this->loginAction();
     }
 
