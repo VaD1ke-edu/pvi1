@@ -2,16 +2,25 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="/public/css/common.css"/>
-    <script type="application/javascript" src="/public/js/common.js"></script>
     <title>ПВИ Лабораторная 1</title>
-<!--    <link rel="stylesheet" href="/css/normalize.css">-->
+
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script type="application/javascript" src="/public/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/css/fonts.css"/>
 </head>
 <body>
-    <div class="page-content">
-        <?php /** @var App\Model\View\Renderer $this */ ?>
-        <?php $this->renderTemplate() ?>
-    </div>
+    <section class="container">
+        <header class="header">
+            <div class="header__shop">VaD1ke&Cheerd Shop</div>
+        </header>
+        <div class="page-content">
+            <?php /** @var App\Model\View\Renderer $this */ ?>
+            <?php $this->renderTemplate() ?>
+        </div>
+        <footer class="footer">
+            <div class="footer__info">Cheerd & VaD1ke - 2016</div>
+        </footer>
+    </section>
 </body>
 </html>

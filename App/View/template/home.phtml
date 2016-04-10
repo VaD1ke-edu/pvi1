@@ -9,24 +9,38 @@ $_categories = $this->getData('categories');
 ?>
 <?php if ($_categories && $_categories->getSize()): ?>
     <h1>Категории</h1>
-    <ul>
+    <ul class="category-filters">
         <?php /** @var App\Model\Category $category */ ?>
         <?php while ($category = $_categories->fetchItem()): ?>
-            <li><?php echo $category->getName() ?></li>
+            <li class="category-filter">
+                <input type="checkbox" id="category-<?php echo $category->getId() ?>" 
+                       class="category-filter__checkbox"
+                       value="<?php echo $category->getId() ?>">
+                <label for="category-<?php echo $category->getId() ?>" class="category-filter__label">
+                    <?php echo $category->getName() ?>
+                </label>
+            </li>
         <?php endwhile; ?>
     </ul>
 <?php endif; ?>
 <?php if ($_products && $_products->getSize()): ?>
-    <h1>Товары</h1>
-    <input type="text" placeholder="Поиск по товарам">
-    <?php while ($_product = $_products->fetchItem()): ?>
-        <div><?php echo $_product->getName() ?></div>
-        <div><?php echo $_product->getPrice() . ' руб.' ?></div>
-        <div><?php echo $_product->getCategoryId() ?></div>
-        <?php if ($_product->getImage()): ?>
-            <div><img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>" width="300px" height="150px"></div>
-        <?php endif; ?>
-    <?php endwhile; ?>
+    <div id="product-list" class="products">
+        <h1>Товары</h1>
+        <input class="product__search" type="text" placeholder="Поиск по товарам">
+    </div>
 <?php else: ?>
     <h1>Пока нет товаров :(</h1>
 <?php endif; ?>
+<?php $productsData = []; ?>
+<?php
+/** @var App\Model\Product $_product */ 
+while ($_product = $_products->fetchItem()) {
+    $productsData[$_product->getId()] = $_product->getData();
+    if ($_product->getImage()) {
+        $productsData[$_product->getId()]['image_url'] = $_product->getImageUrl();
+    }
+} 
+?>
+<script type="application/json" id="productsData">
+  <?php echo json_encode($productsData) ?>
+</script>

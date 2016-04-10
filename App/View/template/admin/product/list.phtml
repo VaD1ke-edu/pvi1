@@ -10,7 +10,7 @@
         <div>Цена: <?php echo $_product->getPrice() . ' руб.' ?></div>
         <div>Количество: <?php echo $_product->getQty() ?></div>
         <?php if ($_product->getImage()): ?>
-            <div><img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>" width="300px" height="150px"></div>
+            <div><img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>" width="300px" height="300px"></div>
         <?php endif; ?>
         <a href="/admin/product/edit/?id=<?php echo $_product->getId() ?>">Редактировать</a>
     <?php endwhile; ?>

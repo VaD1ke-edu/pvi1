@@ -32,6 +32,7 @@ class IndexController extends AbstractController
         if (!isset($_POST['admin'])) {
             return $this->_di->get('View', [
                 'template' => 'admin/login',
+                'layout'   => 'admin/base',
             ]);
         }
         

@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'PTSans';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/PTSans/PTS55F_W.eot');
+    src: url('../fonts/PTSans/PTS55F_W.woff') format('woff'),
+    url('../fonts/PTSans/PTS55F_W.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PTSans';
+    font-style: italic;
+    font-weight: normal;
+    src: url('../fonts/PTSans/PTS56F_W.eot');
+    src: url('../fonts/PTSans/PTS56F_W.woff') format('woff'),
+    url('../fonts/PTSans/PTS56F_W.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PTSans';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/PTSans/PTS75F_W.eot') format('woff2');
+    src: url('../fonts/PTSans/PTS75F_W.woff') format('woff'),
+    url('../fonts/PTSans/PTS75F_W.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'PTSans';
+    font-style: italic;
+    font-weight: bold;
+    src: url('../fonts/PTSans/PTS76F_W.eot') format('woff2');
+    src: url('../fonts/PTSans/PTS76F_W.woff') format('woff'),
+    url('../fonts/PTSans/PTS76F_W.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'rubl';
+    src: url('../fonts/rouble-webfont.eot');
+    src: url('../fonts/rouble-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/rouble-webfont.woff') format('woff'),
+    url('../fonts/rouble-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
