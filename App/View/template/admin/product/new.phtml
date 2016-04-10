@@ -5,21 +5,33 @@
 $categories = $this->getData('categories');
 ?>
 <h2>Добавить новый продукт</h2>
-<form action="/admin/product/save" method="post" enctype="multipart/form-data">
-    <label for="name">Название</label>
-    <input type="text" name="product[name]" id="name"">
-    <label for="price">Цена</label>
-    <input type="text" name="product[price]" id="price"">
-    <label for="qty">Количество</label>
-    <input type="text" name="product[qty]" id="qty"">
-    <label for="category_id">Категория</label>
-    <select name="product[category_id]" id="category_id">
-        <?php /** @var App\Model\Category $category */ ?>
-        <?php while ($category = $categories->fetchItem()): ?>
-            <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
-        <?php endwhile; ?>
-    </select>
-    <label for="image">Изображение</label>
-    <input type="file" name="product[image]" id="image">
-    <input type="submit" value="Сохранить">
-</form>
+<div class="entity-edit">
+    <form action="/admin/product/save" method="post" enctype="multipart/form-data">
+        <div class="form__row">
+            <label class="form__row-label" for="name">Название</label>
+            <input type="text" name="product[name]" id="name"">
+        </div>
+        <div class="form__row">
+            <label class="form__row-label" for="price">Цена</label>
+            <input type="text" name="product[price]" id="price"">
+        </div>
+        <div class="form__row">
+            <label class="form__row-label" for="qty">Количество</label>
+            <input type="text" name="product[qty]" id="qty"">
+        </div>
+        <div class="form__row">
+            <label class="form__row-label" for="category_id">Категория</label>
+            <select name="product[category_id]" id="category_id">
+                <?php /** @var App\Model\Category $category */ ?>
+                <?php while ($category = $categories->fetchItem()): ?>
+                    <option value="<?php echo $category->getId() ?>"><?php echo $category->getName() ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="form__row">
+            <label class="form__row-label" for="image">Изображение</label>
+            <input type="file" name="product[image]" id="image">
+        </div>
+        <input type="submit" value="Сохранить">
+    </form>
+</div>
