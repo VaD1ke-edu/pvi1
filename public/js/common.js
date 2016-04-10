@@ -2,9 +2,10 @@ $(function () {
     "use strict";
     initProducts();
     initCategoryFilters();
+    initProductSearch();
 
     function initProducts() {
-        var productsData = JSON.parse($('#productsData').html());
+        var productsData = getProductsData();
         var $productsDiv = $('#product-list');
         if (!$productsDiv.length) {
             return;
@@ -33,6 +34,7 @@ $(function () {
         $productsDiv.append($productsList);
         $productsDiv.append($('<div>').addClass('clearfix'));
     }
+
     function initCategoryFilters() {
         $('.category-filter').click(function () {
             var $filters = $(this).closest('.category-filters');
@@ -41,26 +43,57 @@ $(function () {
                 return parseInt(this.value);
             }).get();
 
-            hideProductsByCategories(categoryIds);
+            filterProducts(categoryIds, 'categoryId');
         });
     }
 
-    function hideProductsByCategories(categoryIds) {
+    function initProductSearch() {
+        var delay = (function(){
+            var timer = 0;
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+        $('#product-search').keyup(function () {
+            var _this = this;
+            delay(function () {
+                var value = $(_this).val();
+                var productsData = getProductsData();
+                var matcher = new RegExp(value, 'i');
+                var matchedProductIds = [];
+                for (var id in productsData) {
+                    if (!productsData.hasOwnProperty(id)) continue;
+                    if (matcher.test(productsData[id]['name'])) {
+                        matchedProductIds.push(parseInt(id));
+                    }
+                }
+                filterProducts(matchedProductIds);
+            }, 100);
+        })
+    }
+
+    function filterProducts(ids, type) {
+        type = type || 'productId';
         var $products = $('.product');
-        if (!categoryIds) return;
-        if (categoryIds.length === 0) {
+        if (!ids) return;
+        if (ids.length === 0) {
             $products.each(function (id, item) {
-                $(item).closest('.product-container').show();
+                $(item).closest('.product-container').show(50);
             });
             return;
         }
         $products.each(function (id, item) {
             var $container = $(item).closest('.product-container');
-            if (categoryIds.indexOf($(item).data('categoryId')) === -1) {
-                $container.hide();
+            if (ids.indexOf($(item).data(type)) === -1) {
+                $container.hide(50);
                 return;
             }
-            $container.show();
+            $container.show(50);
         });
+    }
+
+    function getProductsData() {
+        return JSON.parse($('#productsData').html());
     }
 });

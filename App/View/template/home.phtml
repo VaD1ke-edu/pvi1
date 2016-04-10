@@ -26,7 +26,7 @@ $_categories = $this->getData('categories');
 <?php if ($_products && $_products->getSize()): ?>
     <div id="product-list" class="products">
         <h1>Товары</h1>
-        <input class="product__search" type="text" placeholder="Поиск по товарам">
+        <input class="product__search" id="product-search" type="text" placeholder="Поиск по товарам">
     </div>
 <?php else: ?>
     <h1>Пока нет товаров :(</h1>

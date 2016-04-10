@@ -102,9 +102,6 @@ class ProductController extends AbstractController
         $product = $this->_di->get('Product');
         
         $product->setData($post);
-        if (!($_FILES && array_key_exists('product', $_FILES))) {
-            return $this->_redirect('admin/product/list');
-        }
 
         /** @var \App\Model\File\Uploader $uploader */
         $uploader = $this->_di->get('FileUploader');
