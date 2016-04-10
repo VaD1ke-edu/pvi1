@@ -141,44 +141,6 @@ class DiC
     }
 
     /**
-     * Assemble bot
-     *
-     * @return void
-     */
-    private function _assembleBot()
-    {
-//        $this->_im->setParameters('App\Bot\Api', ['config' => 'App\Config\Parser']);
-//        $this->_im->addAlias('BotApi', 'App\Bot\Api');
-//
-//        $this->_im->setParameters('App\Bot\Handler', ['di' => $this->_di]);
-//        $this->_im->addAlias('BotHandler', 'App\Bot\Handler');
-//
-//        $this->_im->setParameters('App\Bot\Updater', [
-//            'api'        => $this->_di->get('BotApi'),
-//            'lastUpdate' => $this->_di->get('LastUpdate'),
-//        ]);
-//        $this->_im->addAlias('BotUpdater', 'App\Bot\Updater');
-    }
-
-    /**
-     * Assemble bot commands
-     *
-     * @return void
-     */
-    private function _assembleBotCommands()
-    {
-//        $this->_im->setParameters('App\Bot\CommandAbstract', ['botApi' => $this->_di->get('BotApi')]);
-//        $this->_im->setParameters('App\Bot\Command\Register', [
-//            'chat'      => $this->_di->get('Chat'),
-//            'userIssue' => $this->_di->get('UserIssue'),
-//            'userKey'   => $this->_di->get('UserKey'),
-//        ]);
-//        $this->_im->setParameters('App\Bot\Command\Deregister', [
-//            'chat'   => $this->_di->get('Chat')
-//        ]);
-    }
-
-    /**
      * Assemble view
      *
      * @return void
