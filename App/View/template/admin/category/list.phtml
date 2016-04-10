@@ -4,11 +4,19 @@
 <?php $categories = $this->getData('categories') ?>
 <?php if ($categories && $categories->getSize()): ?>
     <h1>Категории</h1>
-    <?php /** @var App\Model\Category $_category */ ?>
-    <?php while ($_category = $categories->fetchItem()): ?>
-        <div><?php echo $_category->getName() ?></div>
-        <a href="/admin/category/edit/?id=<?php echo $_category->getId() ?>">Редактировать</a>
-    <?php endwhile; ?>
+    <table class="entity-table">
+        <tr>
+            <th>Название</th>
+            <th>Действие</th>
+        </tr>
+        <?php /** @var App\Model\Category $_category */ ?>
+        <?php while ($_category = $categories->fetchItem()): ?>
+            <tr>
+                <td><div><?php echo $_category->getName() ?></div></td>
+                <td><a href="/admin/category/edit/?id=<?php echo $_category->getId() ?>">Редактировать</a></td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 <?php else: ?>
     <h1>Пока нет категорий :(</h1>
 <?php endif; ?>

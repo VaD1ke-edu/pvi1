@@ -8,34 +8,46 @@ $categories = $this->getData('categories');
 ?>
 
 <?php if ($product): ?>
-    <form action="/admin/product/save" method="post" enctype="multipart/form-data">
-        <input name="product[id]" type="hidden" value="<?php echo $product->getId() ?>">
-        <label for="name">Название</label>
-        <input type="text" name="product[name]" id="name" value="<?php echo $product->getName() ?>">
-        <label for="price">Цена</label>
-        <input type="text" name="product[price]" id="price" value="<?php echo $product->getPrice() ?>">
-        <label for="qty">Количество</label>
-        <input type="text" name="product[qty]" id="qty" value="<?php echo $product->getQty() ?>">
-        <label for="category_id">Категория</label>
-        <select name="product[category_id]" id="category_id">
-            <?php /** @var App\Model\Category $category */ ?>
-            <?php while ($category = $categories->fetchItem()): ?>
-                <option value="<?php echo $category->getId() ?>"
-                    <?php if($category->getId() == $product->getCategoryId()) echo ' selected' ?>>
-                    <?php echo $category->getName() ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-        <label for="image">Изображение</label>
-        <?php if ($product->getImage()): ?>
-            <img src="<?php echo $product->getImageUrl() ?>" alt="<?php echo $product->getName() ?>" width="100px" height="50px">
-        <?php endif; ?>
-        <input type="file" name="product[image]" id="image" value="<?php echo $product->getImage() ?>">
-        <button id="delete-product" data-url="/admin/product/delete?id=<?php echo $product->getId()?>">
-            Удалить
-        </button>
-        <input type="submit" value="Сохранить">
-    </form>
+    <div class="entity-edit">
+        <form action="/admin/product/save" method="post" enctype="multipart/form-data">
+            <input name="product[id]" type="hidden" value="<?php echo $product->getId() ?>">
+            <div class="form__row">
+                <label class="form__row-label" for="name">Название</label>
+                <input type="text" name="product[name]" id="name" value="<?php echo $product->getName() ?>">
+            </div>
+            <div class="form__row">
+                <label class="form__row-label" for="price">Цена</label>
+                <input type="text" name="product[price]" id="price" value="<?php echo $product->getPrice() ?>">
+            </div>
+            <div class="form__row">
+                <label class="form__row-label" for="qty">Количество</label>
+                <input type="text" name="product[qty]" id="qty" value="<?php echo $product->getQty() ?>">
+            </div>
+            <div class="form__row">
+                <label class="form__row-label" for="category_id">Категория</label>
+                <select name="product[category_id]" id="category_id">
+                    <?php /** @var App\Model\Category $category */ ?>
+                    <?php while ($category = $categories->fetchItem()): ?>
+                        <option value="<?php echo $category->getId() ?>"
+                            <?php if($category->getId() == $product->getCategoryId()) echo ' selected' ?>>
+                            <?php echo $category->getName() ?>
+                        </option>
+                    <?php endwhile; ?>
+                </select>
+            </div>
+            <div class="form__row">
+                <label class="form__row-label" for="image">Изображение</label>
+                <?php if ($product->getImage()): ?>
+                    <img src="<?php echo $product->getImageUrl() ?>" alt="<?php echo $product->getName() ?>" width="100px" height="50px">
+                <?php endif; ?>
+                <input type="file" name="product[image]" id="image" value="<?php echo $product->getImage() ?>">
+            </div>
+            <button id="delete-product" data-url="/admin/product/delete?id=<?php echo $product->getId()?>">
+                Удалить
+            </button>
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
 <?php else: ?>
     <h1>Такого товара нет :(</h1>
 <?php endif; ?>

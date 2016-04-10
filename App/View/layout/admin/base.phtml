@@ -1,23 +1,42 @@
+<?php /** @var App\Model\View\Renderer $this */ ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="/public/css/admin/common.css"/>
-    <script type="application/javascript" src="/public/js/admin/common.js"></script>
     <title>Админка ПВИ Лабораторная 1</title>
-<!--    <link rel="stylesheet" href="/css/normalize.css">-->
+    
+    <script   src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script type="application/javascript" src="/public/js/admin/common.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/public/css/global.css"/>
+    <link rel="stylesheet" type="text/css" href="/public/css/admin/common.css"/>
 </head>
 <body>
-    <header>
-        VaD1ke&Cheerd Shop
-    </header>
-    <div class="page-content">
-        <?php /** @var App\Model\View\Renderer $this */ ?>
-        <?php $this->renderTemplate() ?>
-    </div>
-    <footer>
-        2016
-    </footer>
+    <section class="container">
+        <header class="header">
+            <div class="header__shop">VaD1ke&Cheerd Shop</div>
+            <?php if ($this->getData('session')->isAdminLoggedIn()): ?>
+                <div class="header__logout"><a class="header__logout_link" href="/admin/logout">Выйти</a></div>
+            <?php endif; ?>
+        </header>
+        <?php if ($this->getData('session')->isAdminLoggedIn()): ?>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="/admin/product/list" class="nav-item__link">Товары</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/category/list" class="nav-item__link">Категории</a>
+                    </li>
+                </ul>
+            </nav>
+        <?php endif; ?>
+        <div class="page-content">
+            <?php $this->renderTemplate() ?>
+        </div>
+        <footer class="footer">
+            <div class="footer__info">Cheerd & VaD1ke - 2016</div>
+        </footer>
+    </section>
 </body>
 </html>

@@ -53,4 +53,17 @@ class AbstractController extends \App\Controller\AbstractController
         $session = $this->_di->get('Session');
         return $session->isAdminLoggedIn();
     }
+
+    /**
+     * Prepare view
+     *
+     * @param array $data Data
+     * @return array
+     */
+    protected function _prepareView(array $data)
+    {
+        $data['layout'] = 'admin/base';
+        $data['params']['session'] = $this->_di->get('Session');
+        return $data;
+    }
 }

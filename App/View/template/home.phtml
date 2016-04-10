@@ -35,6 +35,7 @@ $_categories = $this->getData('categories');
 <?php
 /** @var App\Model\Product $_product */ 
 while ($_product = $_products->fetchItem()) {
+    if ($_product->getQty() <= 0) continue;
     $productsData[$_product->getId()] = $_product->getData();
     if ($_product->getImage()) {
         $productsData[$_product->getId()]['image_url'] = $_product->getImageUrl();

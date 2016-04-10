@@ -31,11 +31,10 @@ class CategoryController extends AbstractController
      */
     public function listAction()
     {
-        return $this->_di->get('View', [
+        return $this->_di->get('View', $this->_prepareView([
             'template' => 'admin/category/list',
-            'layout'   => 'admin/base',
             'params'   => ['categories' => $this->_getCategories()],
-        ]);
+        ]));
     }
 
     /**
@@ -58,20 +57,19 @@ class CategoryController extends AbstractController
             return $this->_redirect('admin/category/list');
         }
 
-        return $this->_di->get('View', [
+        return $this->_di->get('View', $this->_prepareView([
             'template' => 'admin/category/edit',
-            'layout'   => 'admin/base',
             'params'   => [
                 'category' => $category,
             ],
-        ]);
+        ]));
     }
     
     public function newAction()
     {
-        return $this->_di->get('View', [
-            'template' => 'admin/category/new',
-        ]);
+        return $this->_di->get(
+            'View', $this->_prepareView(['template' => 'admin/category/new'])
+        );
     }
 
     /**

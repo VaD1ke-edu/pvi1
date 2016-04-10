@@ -30,10 +30,9 @@ class IndexController extends AbstractController
     public function loginAction()
     {
         if (!isset($_POST['admin'])) {
-            return $this->_di->get('View', [
-                'template' => 'admin/login',
-                'layout'   => 'admin/base',
-            ]);
+            return $this->_di->get(
+                'View', $this->_prepareView(['template' => 'admin/login'])
+            );
         }
         
         /** @var \App\Model\Admin\User $admin */

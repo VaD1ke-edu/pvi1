@@ -33,42 +33,12 @@ class Session
         }
     }
 
-    public function register(array $customerData)
-    {
-        $customerData['password'] = $this->_hashPassword($customerData['password']);
-        /** @var Customer $customer */
-        $customer = $this->_di->newInstance('Customer');
-        $customer->setData($customerData);
-        try {
-            $customer->save();
-            return true;
-        } catch (\Exception $ex) {
-            return false;
-        }
-    }
-
-    public function auth(Customer $customer)
-    {
-        $customers = new DBCollection(PDOHelper::getPdo(), new CustomerTable);
-        $customers->filterBy('login', $customer->getLogin());
-        $customers->filterBy('password', $this->_hashPassword($customer->getPassword()));
-
-        try {
-            $fetchedCustomers = $customers->fetch();
-        } catch (\Exception $ex) {
-            $fetchedCustomers = [];
-            var_dump($ex);
-        }
-
-        if (count($fetchedCustomers) == 1) {
-            $_SESSION['customer'] = new Customer(reset($fetchedCustomers));
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    /**
+     * Auth admin
+     * 
+     * @param AdminUser $admin Admin user
+     * @return bool
+     */
     public function authAdmin(AdminUser $admin)
     {
         $adminLoginData = $admin->getData();
@@ -90,74 +60,50 @@ class Session
         return true;
     }
 
-    public function logout()
-    {
-        if (isset($_SESSION['customer'])) {
-            unset($_SESSION['customer']);
-        }
-    }
-
+    /**
+     * Logout admin
+     * 
+     * @return $this
+     */
     public function logoutAdmin()
     {
         if (isset($_SESSION['admin'])) {
             unset($_SESSION['admin']);
         }
+        return $this;
     }
 
-    public function isLoggedIn()
-    {
-        return isset($_SESSION['customer']);
-    }
-
+    /**
+     * Is admin logged in
+     * 
+     * @return bool
+     */
     public function isAdminLoggedIn()
     {
         return isset($_SESSION['admin']);
     }
 
-
-    public function getCustomer()
-    {
-        return $this->isLoggedIn() ? $_SESSION['customer'] : null;
-    }
-
+    /**
+     * Get admin
+     * 
+     * @return mixed
+     */
     public function getAdmin()
     {
         return $this->isAdminLoggedIn() ? $_SESSION['admin'] : null;
     }
 
+    /**
+     * Get session ID
+     * 
+     * @return mixed
+     */
     public function getSessionId()
     {
         return session_id();
     }
-
-    public function generateToken()
-    {
-        $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
-    }
-
-    public function getToken()
-    {
-        return isset($_SESSION['token']) ? $_SESSION['token'] : null;
-    }
-
-    public function validateToken($token)
-    {
-        $valid = $this->getToken() === $token;
-        unset($_SESSION['token']);
-        return $valid;
-    }
-
-    public function getQuoteId()
-    {
-        return isset($_SESSION['quote_id']) ? $_SESSION['quote_id'] : null;
-    }
-
-    public function setQuoteId($id)
-    {
-        $_SESSION['quote_id'] = $id;
-    }
-
-
+    
+    
     /**
      * Hash password
      *

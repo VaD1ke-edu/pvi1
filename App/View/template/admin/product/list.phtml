@@ -4,18 +4,32 @@
 <?php $products = $this->getData('products') ?>
 <?php if ($products && $products->getSize()): ?>
     <h1>Товары</h1>
-    <?php /** @var App\Model\Product $_product */ ?>
-    <?php while ($_product = $products->fetchItem()): ?>
-        <div><?php echo $_product->getName() ?></div>
-        <div>Цена: <?php echo $_product->getPrice() . ' руб.' ?></div>
-        <div>Количество: <?php echo $_product->getQty() ?></div>
-        <?php if ($_product->getImage()): ?>
-            <div><img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>" width="300px" height="300px"></div>
-        <?php endif; ?>
-        <a href="/admin/product/edit/?id=<?php echo $_product->getId() ?>">Редактировать</a>
-    <?php endwhile; ?>
+    <table class="entity-table">
+        <tr>
+            <th>Название</th>
+            <th>Цена (руб.)</th>
+            <th>Количество</th>
+            <th>Изображение</th>
+            <th>Действие</th>
+        </tr>
+        <?php /** @var App\Model\Product $_product */ ?>
+        <?php while ($_product = $products->fetchItem()): ?>
+            <tr>
+                <td><div><?php echo $_product->getName() ?></div></td>
+                <td><div><?php echo $_product->getPrice() . ' руб.' ?></div></td>
+                <td><div><?php echo $_product->getQty() ?></div></td>
+                <?php if ($_product->getImage()): ?>
+                    <td>
+                        <img src="<?php echo $_product->getImageUrl() ?>" alt="<?php echo $_product->getName() ?>"
+                             width="30px" height="30px">
+                    </td>
+                <?php endif; ?>
+                <td><a href="/admin/product/edit/?id=<?php echo $_product->getId() ?>">Редактировать</a></td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 <?php else: ?>
     <h1>Пока нет товаров :(</h1>
 <?php endif; ?>
 <br>
-<a href="/admin/product/new">Добавить</a>
+<a class="entity-add" href="/admin/product/new">Добавить</a>

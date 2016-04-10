@@ -6,15 +6,19 @@ $category = $this->getData('category');
 ?>
 
 <?php if ($category): ?>
-    <form action="/admin/category/save" method="post" enctype="multipart/form-data">
-        <input name="category[id]" type="hidden" value="<?php echo $category->getId() ?>">
-        <label for="name">Название</label>
-        <input type="text" name="category[name]" id="name" value="<?php echo $category->getName() ?>">
-        <button id="delete-entity" data-url="/admin/category/delete?id=<?php echo $category->getId()?>">
-            Удалить
-        </button>
-        <input type="submit" value="Сохранить">
-    </form>
+    <div class="entity-edit">
+        <form action="/admin/category/save" method="post" enctype="multipart/form-data">
+            <input name="category[id]" type="hidden" value="<?php echo $category->getId() ?>">
+            <div class="form__row">
+                <label class="form__row-label" for="name">Название</label>
+                <input type="text" name="category[name]" id="name" value="<?php echo $category->getName() ?>">
+            </div>
+            <button id="delete-entity" data-url="/admin/category/delete?id=<?php echo $category->getId()?>">
+                Удалить
+            </button>
+            <input type="submit" value="Сохранить">
+        </form>
+    </div>
 <?php else: ?>
     <h1>Такой категории нет :(</h1>
 <?php endif; ?>

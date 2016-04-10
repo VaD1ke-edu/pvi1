@@ -31,11 +31,10 @@ class ProductController extends AbstractController
      */
     public function listAction()
     {
-        return $this->_di->get('View', [
+        return $this->_di->get('View', $this->_prepareView([
             'template' => 'admin/product/list',
-            'layout'   => 'admin/base',
             'params'   => ['products' => $this->_getProducts()],
-        ]);
+        ]));
     }
 
     /**
@@ -61,14 +60,13 @@ class ProductController extends AbstractController
             return $this->_redirect('admin/product/list');
         }
 
-        return $this->_di->get('View', [
-            'template' => 'admin/product/edit',
-            'layout' => 'admin/base',
-            'params'   => [
-                'product'    => $product,
-                'categories' => $categories,
-            ],
-        ]);
+        return $this->_di->get('View', $this->_prepareView([
+                'template' => 'admin/product/edit',
+                'params'   => [
+                    'product'    => $product,
+                    'categories' => $categories,
+                ],
+            ]));
     }
     
     public function newAction()
@@ -77,13 +75,12 @@ class ProductController extends AbstractController
         $category = $this->_di->get('Category');
         $categories = $category->getCollection()->loadAll($category);
 
-        return $this->_di->get('View', [
-            'template' => 'admin/product/new',
-            'layout'   => 'admin/base',
-            'params'   => [
-                'categories' => $categories,
-            ],
-        ]);
+        return $this->_di->get('View', $this->_prepareView([
+                'template' => 'admin/product/new',
+                'params'   => [
+                    'categories' => $categories,
+                ],
+            ]));
     }
 
     /**
