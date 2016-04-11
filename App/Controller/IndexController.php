@@ -29,15 +29,39 @@ class IndexController extends AbstractController
         ]);
     }
 
-    public function viewAction()
+    /**
+     * Buy product action
+     * 
+     * @return void
+     */
+    public function buyAction()
     {
-        $this->_di->get('Session')->generateToken();
+        $this->_prepareJsonAction();
+        if (!$this->_isPost()) {
+            echo json_encode('Not a post action');
+            return;
+        }
+        $data = $_POST;
+        if (!isset($data['id'])) {
+            echo json_encode('No ID was sent');
+            return;
+        }
+        /** @var \App\Model\Product $product */
         $product = $this->_di->get('Product');
-        $product->load($_GET['id']);
-        return $this->_di->get('View', [
-            'template' => 'product_view',
-            'params'   => ['product' => $product]
-        ]);
+        $productData = $product->setId($data['id'])->load();
+
+        if (!$productData) {
+            echo json_encode('Product with this ID doesn\'t exist');
+            return;
+        }
+        $product->setData($productData);
+        if ($product->getQty() <= 0) {
+            echo json_encode('Product is out of stock');
+            return;
+        }
+        $product->setQty($product->getQty() - 1);
+        $product->save();
+        echo json_encode('Product was successfully bought');
     }
 
 

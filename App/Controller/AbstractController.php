@@ -66,4 +66,9 @@ class AbstractController
     {
         return strtolower($_SERVER['REQUEST_METHOD']) == 'post';
     }
+    
+    protected function _prepareJsonAction()
+    {
+        header('Content-Type: application/json');
+    }
 }
