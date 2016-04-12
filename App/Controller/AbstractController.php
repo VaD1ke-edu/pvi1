@@ -66,9 +66,29 @@ class AbstractController
     {
         return strtolower($_SERVER['REQUEST_METHOD']) == 'post';
     }
-    
+
+    /**
+     * Prepare json action
+     * @return void
+     */
     protected function _prepareJsonAction()
     {
         header('Content-Type: application/json');
+    }
+
+    /**
+     * Prepare json response
+     *
+     * @param string $message Message
+     * @param string $status  Status
+     *
+     * @return string
+     */
+    protected function _prepareJsonResponse($message, $status = 'success')
+    {
+        return json_encode([
+            'status'  => $status,
+            'message' => $message
+        ]);
     }
 }

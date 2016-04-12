@@ -1,7 +1,8 @@
 $(function() {
     $('.js-product-buy').click(function() {
-        var productId = $(this).closest('.product').data('productId');
-        sendAjaxWithPopup('/index/buy', 'POST', {product: productId});
+        var productId = $(this).closest('.product-container')
+            .find('.product').attr('data-product-id');
+        sendAjaxWithPopup('/index/buy', 'POST', {id: productId});
     });
 
     // close popup

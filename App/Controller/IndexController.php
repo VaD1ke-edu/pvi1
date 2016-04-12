@@ -38,12 +38,12 @@ class IndexController extends AbstractController
     {
         $this->_prepareJsonAction();
         if (!$this->_isPost()) {
-            echo json_encode('Not a post action');
+            echo $this->_prepareJsonResponse('Не POST запрос', 'fail');
             return;
         }
         $data = $_POST;
         if (!isset($data['id'])) {
-            echo json_encode('No ID was sent');
+            echo $this->_prepareJsonResponse('Не был передан ID товара', 'fail');
             return;
         }
         /** @var \App\Model\Product $product */
@@ -51,17 +51,17 @@ class IndexController extends AbstractController
         $productData = $product->setId($data['id'])->load();
 
         if (!$productData) {
-            echo json_encode('Product with this ID doesn\'t exist');
+            echo $this->_prepareJsonResponse('Такой продукт не существует', 'fail');
             return;
         }
         $product->setData($productData);
         if ($product->getQty() <= 0) {
-            echo json_encode('Product is out of stock');
+            echo $this->_prepareJsonResponse('Продукта нет в наличии', 'fail');
             return;
         }
         $product->setQty($product->getQty() - 1);
         $product->save();
-        echo json_encode('Product was successfully bought');
+        echo $this->_prepareJsonResponse('Товар был успешно куплен');
     }
 
 
